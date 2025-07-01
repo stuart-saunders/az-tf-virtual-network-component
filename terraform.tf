@@ -1,12 +1,28 @@
-# terraform {
-#   required_providers {
-#     azurerm = {
-#       source  = "hashicorp/azurerm"
-#       version = ">= 3.30"
-#     }
-#     # aws = {
-#     #   source  = "hashicorp/aws"
-#     #   version = ">= 4.37.0"
-#     # }
-#   }
-# }
+terraform {
+  #   backend "azurerm" {
+  #   }
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">=4.23.0"
+    }
+
+    azapi = {
+      source  = "azure/azapi"
+      version = ">=2.2.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  subscription_id                 = var.subscription_id
+  resource_provider_registrations = "none"
+  features {
+  }
+}
+
+provider "azapi" {
+  subscription_id = var.subscription_id
+  use_msi         = var.azapi_config.use_msi
+}
